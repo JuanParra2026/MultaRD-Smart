@@ -1,0 +1,25 @@
+# Entorno Virtual Python
+.venv/
+venv/
+ENV/
+env/
+
+# Byte-compiled / optimizados
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Archivos de entorno y secretos
+.env
+.env.local
+*.log
+
+# Archivos del sistema y editores
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

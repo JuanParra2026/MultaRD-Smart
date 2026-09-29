@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MultaRD Smart - Sistema educativo e innovador para la gestión, cálculo y consulta de multas de tránsito.">
+    <title>MultaRD Smart | Sistema de Gestión y Cálculo de Infracciones de Tránsito</title>
+    
+    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- App Container Layout -->
+    <div class="app-layout">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="app-logo">
+                    <div class="logo-icon">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span class="logo-pulse"></span>
+                    </div>
+                    <div class="logo-text">
+                        <h2>MultaRD <span>Smart</span></h2>
+                        <span class="badge-demo">PROYECTO EDUCATIVO</span>
+                    </div>
+                </div>
+                <button class="btn-icon sidebar-close-btn" id="sidebarCloseBtn" aria-label="Cerrar Menú">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="nav-section-title">PRINCIPAL</div>
+                <button class="nav-link active" data-target="section-dashboard" id="nav-dashboard">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-link" data-target="section-nueva-multa" id="nav-nueva-multa">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span>Calculadora / Nueva Multa</span>
+                </button>
+                <button class="nav-link" data-target="section-historial" id="nav-historial">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>Historial de Multas</span>
+                    <span class="nav-counter" id="navCounterTotal">0</span>
+                </button>
+
+                <div class="nav-section-title">ANÁLISIS & REPORTES</div>
+                <button class="nav-link" data-target="section-estadisticas" id="nav-estadisticas">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span>Estadísticas y Gráficos</span>
+                </button>
+                <button class="nav-link" data-target="section-analisis" id="nav-analisis">
+                    <i class="fa-solid fa-brain"></i>
+                    <span>Centro de Análisis AI</span>
+                    <span class="badge-innovative">Nuevo</span>
+                </button>
+
+                <div class="nav-section-title">ADMINISTRACIÓN</div>
+                <button class="nav-link" data-target="section-tarifas" id="nav-tarifas">
+                    <i class="fa-solid fa-sliders"></i>
+                    <span>Tarifas & Infracciones</span>
+                </button>
+                <button class="nav-link" data-target="section-backup" id="nav-backup">
+                    <i class="fa-solid fa-database"></i>
+                    <span>Copia de Seguridad</span>
+                </button>
+                <button class="nav-link" data-target="section-normativa" id="nav-normativa">
+                    <i class="fa-solid fa-scale-balanced"></i>
+                    <span>Marco & Normativa</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="demo-disclaimer-box">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <p>Aplicación de demostración. No vinculada a DIGESETT ni INTRANT.</p>
+                </div>
+                <div class="system-time">
+                    <i class="fa-regular fa-clock"></i>
+                    <span id="liveClock">00:00:00</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT WRAPPER -->
+        <div class="main-wrapper">
+            
+            <!-- TOP NAVBAR -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="btn-icon mobile-menu-toggle" id="sidebarToggleBtn" aria-label="Abrir Menú">
+                        <i class="fa-solid fa-bars-staggered"></i>
+                    </button>
+                    <div class="page-title-wrap">
+                        <h1 class="page-title" id="currentPageTitle">Panel Principal</h1>
+                        <p class="page-subtitle" id="currentPageSubtitle">Resumen general y estadísticas en tiempo real</p>
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    <!-- Tarifa Status Indicator -->
+                    <div class="tariff-status-chip" title="Última fecha de actualización del catálogo">
+                        <i class="fa-solid fa-tags"></i>
+                        <span>Tarifas: <strong id="headerTariffDate">28/09/2026</strong></span>
+                    </div>
+
+                    <!-- Quick Action Button -->
+                    <button class="btn btn-primary btn-sm" id="btnQuickNewFine">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Registrar Multa</span>
+                    </button>
+
+                    <!-- Theme Toggle Switch -->
+                    <button class="theme-toggle" id="themeToggleBtn" aria-label="Cambiar tema de color" title="Alternar Modo Oscuro / Claro">
+                        <i class="fa-solid fa-sun icon-sun"></i>
+                        <i class="fa-solid fa-moon icon-moon"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- NOTIFICATION TOAST CONTAINER -->
+            <div class="toast-container" id="toastContainer"></div>
+
+            <!-- CONTENT SECTIONS -->
+            <main class="content-area">
+
+                <!-- ======================================================== -->
+                <!-- 1. DASHBOARD SECTION -->
+                <!-- ======================================================== -->
+                <section class="app-section active" id="section-dashboard">
+                    <!-- Educational Warning Banner -->
+                    <div class="edu-banner">
+                        <div class="edu-banner-icon">
+                            <i class="fa-solid fa-shield-virus"></i>
+                        </div>
+                        <div class="edu-banner-content">
+                            <h4>Entorno Demostrativo y Educativo</h4>
+                            <p>Esta plataforma ha sido desarrollada con fines pedagógicos y técnicos. Los montos, infracciones y registros son configurables y ficticios. Verifique siempre la normativa oficial vigente (Ley 63-17) antes de usar información con fines formales.</p>
+                        </div>
+                    </div>
+
+                    <!-- Top Summary Statistics Cards (KPIs) -->
+                    <div class="kpi-grid">
+                        <div class="kpi-card card-blue">
+                            <div class="kpi-icon-wrap">
+                                <i class="fa-solid fa-file-invoice-dollar"></i>
+                            </div>
+                            <div class="kpi-data">
+                                <span class="kpi-label">MULTAS REGISTRADAS</span>
+                                <h3 class="kpi-value" id="kpiTotalMultas">0</h3>
+                                <div class="kpi-trend">
+                                    <span class="trend-badge"><i class="fa-solid fa-chart-line"></i> Total global</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card card-amber">
+                            <div class="kpi-icon-wrap">
+                                <i class="fa-solid fa-hourglass-half"></i>
+                            </div>
+                            <div class="kpi-data">
+                                <span class="kpi-label">MULTAS PENDIENTES</span>
+                                <h3 class="kpi-value" id="kpiPendientes">0</h3>
+                                <div class="kpi-trend">
+                                    <span class="trend-badge text-warning" id="kpiPendientesAmount">RD$ 0.00 por cobrar</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card card-emerald">
+                            <div class="kpi-icon-wrap">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+                            <div class="kpi-data">
+                                <span class="kpi-label">MULTAS PAGADAS</span>
+                                <h3 class="kpi-value" id="kpiPagadas">0</h3>
+                                <div class="kpi-trend">
+                                    <span class="trend-badge text-success" id="kpiPagadasAmount">RD$ 0.00 cobrado</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card card-purple">
+                            <div class="kpi-icon-wrap">
+                                <i class="fa-solid fa-vault"></i>
+                            </div>
+                            <div class="kpi-data">
+                                <span class="kpi-label">TOTAL RECAUDADO / EMITIDO</span>
+                                <h3 class="kpi-value" id="kpiTotalRecaudado">RD$ 0.00</h3>
+                                <div class="kpi-trend">
+                                    <span class="trend-badge text-info" id="kpiAvgAmount">Promedio: RD$ 0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Grid: Charts Preview & Recent Activity -->
+                    <div class="dashboard-grid">
+                        
+                        <!-- Mini Chart: Infracciones Más Frecuentes -->
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <div class="card-title-group">
+                                    <i class="fa-solid fa-chart-pie text-primary"></i>
+                                    <h3>Infracciones Más Frecuentes</h3>
+                                </div>
+                                <span class="card-action-hint">Distribución %</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container-sm">
+                                    <canvas id="chartDashboardInfracciones"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Chart: Estados de Multas -->
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <div class="card-title-group">
+                                    <i class="fa-solid fa-traffic-light text-primary"></i>
+                                    <h3>Estado de las Multas</h3>
+                                </div>
+                                <span class="card-action-hint">Pendientes vs Pagadas</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container-sm">
+                                    <canvas id="chartDashboardEstados"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Recent Records Table -->
+                    <div class="glass-card mt-6">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                <i class="fa-solid fa-clock-rotate-left text-primary"></i>
+                                <h3>Últimos Registros Emitidos</h3>
+                            </div>
+                            <button class="btn btn-outline btn-sm" id="btnGoToHistorial">
+                                <span>Ver Todo el Historial</span>
+                                <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                        <div class="card-body table-responsive">
+                            <table class="data-table" id="tableRecentFines">
+                                <thead>
+                                    <tr>
+                                        <th>ID Registro</th>
+                                        <th>Fecha/Hora</th>
+                                        <th>Conductor</th>
+                                        <th>Placa</th>
+                                        <th>Infracción</th>
+                                        <th>Monto Total</th>
+                                        <th>Estado</th>
+                                        <th>Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyRecentFines">
+                                    <!-- Dynamic Rows -->
+                                </tbody>
+                            </table>
+                            <div class="empty-state-table" id="emptyRecentFines" style="display: none;">
+                                <i class="fa-regular fa-folder-open"></i>
+                                <p>No hay multas registradas aún. ¡Crea la primera en la calculadora!</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======================================================== -->
+                <!-- 2. CALCULADORA / NUEVA MULTA SECTION -->
+                <!-- ======================================================== -->
+                <section class="app-section" id="section-nueva-multa">
+                    <div class="form-layout-grid">
+                        
+                        <!-- Left: Form inputs -->
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <div class="card-title-group">
+                                    <i class="fa-solid fa-file-circle-plus text-primary"></i>
+                                    <h3>Formulario de Registro de Infracción</h3>
+                                </div>
+                                <span class="form-badge-id" id="displayAutoId">MRD-2026-0000</span>
+                            </div>
+
+                            <div class="card-body">
+                                <form id="formNuevaMulta" novalidate>
+                                    
+                                    <!-- Section 1: Conductor & Documentación -->
+                                    <div class="form-group-title">
+                                        <i class="fa-solid fa-user-shield"></i>
+                                        <span>1. Datos del Conductor y Documentación</span>
+                                    </div>
+
+                                    <div class="grid-2">
+                                        <div class="input-field">
+                                            <label for="inputConductor">Nombre Completo del Conductor <span class="required">*</span></label>
+                                            <div class="input-icon-wrapper">
+                                                <i class="fa-regular fa-user"></i>
+                                                <input type="text" id="inputConductor" placeholder="Ej. Juan Carlos Pérez Gómez" required autocomplete="off">
+                                            </div>
+                                            <small class="field-error" id="errorConductor"></small>
+                                        </div>
+
+                                        <div class="input-field">
+                                            <label for="inputLicencia">Cédula / Licencia de Conducir <span class="required">*</span></label>
+                                            <div class="input-icon-wrapper">
+                                                <i class="fa-solid fa-id-card"></i>
+                                                <input type="text" id="inputLicencia" placeholder="Ej. 001-1234567-8" required autocomplete="off">
+                                            </div>
+                                            <small class="field-error" id="errorLicencia"></small>
+                                        </div>
+                                    </div>
+
+                                    <!-- Section 2: Datos del Vehículo -->
+                                    <div class="form-group-title mt-4">
+                                        <i class="fa-solid fa-car-side"></i>
+                                        <span>2. Datos del Vehículo y Ubicación</span>
+                                    </div>
+
+                                    <div class="grid-3">
+                                        <div class="input-field">
+                                            <label for="inputPlaca">Placa del Vehículo <span class="required">*</span></label>
+                                            <div class="input-icon-wrapper">
+                                                <i class="fa-solid fa-hashtag"></i>
+                                                <input type="text" id="inputPlaca" placeholder="Ej. A123456 / G987654" style="text-transform: uppercase;" required autocomplete="off">
+                                            </div>
+                                            <small class="field-error" id="errorPlaca"></small>
+                                        </div>
+
+                                        <div class="input-field">
+                                            <label for="selectTipoVehiculo">Tipo de Vehículo <span class="required">*</span></label>
+                                            <div class="input-icon-wrapper">
+                                                <i class="fa-solid fa-truck-pickup"></i>
+                                                <select id="selectTipoVehiculo" required>
+                                                    <option value="Automóvil Privado">Automóvil Privado (A)</option>
+                                                    <option value="Jeepeta / SUV">Jeepeta / SUV (G)</option>
+                                                    <option value="Motocicleta">Motocicleta (K)</option>
+                                                    <option value="Camión de Carga">Camión de Carga (L)</option>
+                                                    <option value="Autobús de Pasajeros">Autobús de Pasajeros (U)</option>
+                                                    <option value="Vehículo de Transporte Público (Concho)">Transporte Público (C)</option>
+                                                    <option value="Otro">Otro Tipo</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="input-field">
+                                            <label for="inputLugar">Lugar / Vía de la Infracción <span class="required">*</span></label>
+                                            <div class="input-icon-wrapper">
+                                                <i class="fa-solid fa-location-dot"></i>
+                                                <input type="text" id="inputLugar" placeholder="Ej. Av. 27 de Febrero esq. Lincoln" required autocomplete="off">
+                                            </div>
+                                            <small class="field-error" id="errorLugar"></small>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid-2 mt-2">
+                                        <div class="input-field">
+                                            <label for="inputFecha">Fecha del Suceso <span class="required">*</span></label>
+                                            <div class="input-icon-wrapper">
+                                                <i class="fa-regular fa-calendar"></i>
+                                                <input type="date" id="inputFecha" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="input-field">
+                                            <label for="inputHora">Hora del Suceso <span class="required">*</span></label>
+                                            <div class="input-icon-wrapper">
+                                                <i class="fa-regular fa-clock"></i>
+                                                <input type="time" id="inputHora" required>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Section 3: Selección de Infracción y Reglas de Cálculo -->
+                                    <div class="form-group-title mt-4">
+                                        <i class="fa-solid fa-gavel"></i>
+                                        <span>3. Tipificación de la Infracción & Parámetros</span>
+                                    </div>
+
+                                    <div class="input-field">
+                                        <label for="selectInfraccion">Tipo de Infracción Cometida <span class="required">*</span></label>
+                                        <div class="input-icon-wrapper">
+                                            <i class="fa-solid fa-triangle-exclamation"></i>
+                                            <select id="selectInfraccion" required>
+                                                <!-- Dynamic options loaded from catalog -->
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Infracción Live Preview Badge Card -->
+                                    <div class="infraction-preview-card" id="infractionPreviewCard">
+                                        <div class="infraction-preview-header">
+                                            <span class="preview-tag-title">Infracción Seleccionada:</span>
+                                            <strong id="previewInfractionName">Exceso de Velocidad</strong>
+                                        </div>
+                                        <div class="infraction-preview-meta">
+                                            <div class="meta-item">
+                                                <span>Categoría:</span>
+                                                <strong id="previewCategory">Tránsito y Velocidad</strong>
+                                            </div>
+                                            <div class="meta-item">
+                                                <span>Nivel de Gravedad:</span>
+                                                <span class="badge-level level-grave" id="previewLevel">Grave</span>
+                                            </div>
+                                            <div class="meta-item">
+                                                <span>Monto Base Oficial:</span>
+                                                <strong class="text-primary-amount" id="previewBaseAmount">RD$ 1,667.00</strong>
+                                            </div>
+                                        </div>
+                                        <p class="preview-description" id="previewDescription">Superar los límites de velocidad fijados por las señales viales correspondientes.</p>
+                                    </div>
+
+                                    <!-- Modifiers: Quantity, Recargo, Descuento -->
+                                    <div class="grid-3 mt-4">
+                                        <div class="input-field">
+                                            <label for="inputCantidad">Cantidad / Reincidencias</label>
+                                            <div class="input-icon-wrapper">
+                                                <i class="fa-solid fa-arrow-up-1-9"></i>
+                                                <input type="number" id="inputCantidad" min="1" max="10" value="1">
+                                            </div>
+                                        </div>
+
+                                        <div class="input-field">
+                                            <label for="selectRecargo">Recargo Aplicable</label>
+                                            <div class="input-icon-wrapper">
+                                                <i class="fa-solid fa-percent"></i>
+                                                <select id="selectRecargo">
+                                                    <option value="0">Sin Recargo (0%)</option>
+                                                    <option value="15">Horario Nocturno (+15%)</option>
+                                                    <option value="25">Zona Escolar / Hospital (+25%)</option>
+                                                    <option value="50">Conducción Temeraria Agravada (+50%)</option>
+                                                    <option value="100">Fuga / Desacato (+100%)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="input-field">
+                                            <label for="selectDescuento">Descuento Aplicable</label>
+                                            <div class="input-icon-wrapper">
+                                                <i class="fa-solid fa-tag"></i>
+                                                <select id="selectDescuento">
+                                                    <option value="0">Sin Descuento (0%)</option>
+                                                    <option value="20">Pronto Pago (Dentro de 10 días -20%)</option>
+                                                    <option value="10">Primer Conductor Ejemplar (-10%)</option>
+                                                    <option value="15">Convenio Institucional Educativo (-15%)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid-2 mt-3">
+                                        <div class="input-field">
+                                            <label for="selectEstadoMulta">Estado Inicial del Registro</label>
+                                            <div class="input-icon-wrapper">
+                                                <i class="fa-solid fa-flag"></i>
+                                                <select id="selectEstadoMulta">
+                                                    <option value="Pendiente" selected>Pendiente (Por Pagar)</option>
+                                                    <option value="Pagada">Pagada (Cobrada)</option>
+                                                    <option value="En revisión">En revisión</option>
+                                                    <option value="Anulada">Anulada</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="input-field">
+                                            <label for="inputAgente">Agente Fiscalizador (Demostrativo)</label>
+                                            <div class="input-icon-wrapper">
+                                                <i class="fa-solid fa-user-ninja"></i>
+                                                <input type="text" id="inputAgente" value="Oficial R. Méndez (ID #4092)" placeholder="Nombre del agente">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-field mt-3">
+                                        <label for="inputObservaciones">Observaciones / Circunstancias Especiales</label>
+                                        <textarea id="inputObservaciones" rows="2" placeholder="Detalle cualquier situación relevante (ej. conductor cooperativo, condiciones climáticas lluviosas, etc.)"></textarea>
+                                    </div>
+
+                                    <!-- Action Buttons -->
+                                    <div class="form-action-row mt-6">
+                                        <button type="button" class="btn btn-outline" id="btnResetForm">
+                                            <i class="fa-solid fa-arrow-rotate-left"></i>
+                                            <span>Limpiar Formulario</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary btn-lg" id="btnSubmitMulta">
+                                            <i class="fa-solid fa-floppy-disk"></i>
+                                            <span>Registrar Infracción</span>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Right: Real-time Calculation Summary Breakdown -->
+                        <div class="calculator-live-panel">
+                            <div class="glass-card calculation-card">
+                                <div class="card-header">
+                                    <div class="card-title-group">
+                                        <i class="fa-solid fa-receipt text-primary"></i>
+                                        <h3>Desglose de Liquidación</h3>
+                                    </div>
+                                    <span class="live-pulse-badge">Cálculo en vivo</span>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="calc-breakdown-list">
+                                        <div class="calc-row">
+                                            <span class="calc-label">Monto Base de Infracción:</span>
+                                            <span class="calc-value" id="calcLiveBase">RD$ 0.00</span>
+                                        </div>
+
+                                        <div class="calc-row">
+                                            <span class="calc-label">Cantidad / Multiplicador:</span>
+                                            <span class="calc-value" id="calcLiveQty">x 1</span>
+                                        </div>
+
+                                        <div class="calc-row">
+                                            <span class="calc-label">Subtotal Base:</span>
+                                            <span class="calc-value font-semibold" id="calcLiveSubtotal">RD$ 0.00</span>
+                                        </div>
+
+                                        <div class="calc-row text-warning">
+                                            <span class="calc-label">
+                                                <i class="fa-solid fa-plus text-xs"></i> Recargo (<span id="calcLiveRecargoPercent">0%</span>):
+                                            </span>
+                                            <span class="calc-value" id="calcLiveRecargoAmount">+ RD$ 0.00</span>
+                                        </div>
+
+                                        <div class="calc-row text-success">
+                                            <span class="calc-label">
+                                                <i class="fa-solid fa-minus text-xs"></i> Descuento (<span id="calcLiveDescuentoPercent">0%</span>):
+                                            </span>
+                                            <span class="calc-value" id="calcLiveDescuentoAmount">- RD$ 0.00</span>
+                                        </div>
+
+                                        <div class="calc-divider"></div>
+
+                                        <div class="calc-row-total">
+                                            <div class="total-label-wrap">
+                                                <span class="total-title">TOTAL A PAGAR</span>
+                                                <span class="total-currency">Moneda: Peso Dominicano (DOP)</span>
+                                            </div>
+                                            <div class="total-amount-display" id="calcLiveTotal">
+                                                RD$ 0.00
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="calc-info-callout mt-4">
+                                        <i class="fa-solid fa-circle-check"></i>
+                                        <div>
+                                            <strong>Tarifas Dinámicas:</strong>
+                                            <p>El valor base se toma de la configuración activa al momento del registro. Modificaciones futuras de tarifas no afectarán multas previas.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- ======================================================== -->
+                <!-- 3. HISTORIAL DE MULTAS & BUSCADOR INTELIGENTE -->
+                <!-- ======================================================== -->
+                <section class="app-section" id="section-historial">
+                    
+                    <!-- Search and Smart Filter Toolbar -->
+                    <div class="glass-card filter-toolbar-card">
+                        <div class="filter-header">
+                            <div class="filter-title">
+                                <i class="fa-solid fa-magnifying-glass-chart text-primary"></i>
+                                <h3>Buscador Inteligente & Filtros Avanzados</h3>
+                            </div>
+                            <button class="btn btn-text btn-sm" id="btnResetFilters">
+                                <i class="fa-solid fa-rotate-left"></i> Limpiar Filtros
+                            </button>
+                        </div>
+
+                        <div class="filter-controls-grid">
+                            <!-- Live Search Input -->
+                            <div class="search-input-wrap">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <input type="text" id="filterSearchInput" placeholder="Buscar por conductor, cédula/licencia, placa, ID de registro o infracción..." autocomplete="off">
+                                <button class="clear-search-btn" id="btnClearSearch" style="display: none;">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+
+                            <!-- Filter by State -->
+                            <div class="filter-select-wrap">
+                                <label for="filterEstado">Estado:</label>
+                                <select id="filterEstado">
+                                    <option value="TODOS">Todos los Estados</option>
+                                    <option value="Pendiente">Pendiente</option>
+                                    <option value="Pagada">Pagada</option>
+                                    <option value="En revisión">En revisión</option>
+                                    <option value="Anulada">Anulada</option>
+                                </select>
+                            </div>
+
+                            <!-- Filter by Level -->
+                            <div class="filter-select-wrap">
+                                <label for="filterNivel">Nivel de Gravedad:</label>
+                                <select id="filterNivel">
+                                    <option value="TODOS">Todos los Niveles</option>
+                                    <option value="Leve">Leve</option>
+                                    <option value="Moderada">Moderada</option>
+                                    <option value="Grave">Grave</option>
+                                    <option value="Muy Grave">Muy Grave</option>
+                                </select>
+                            </div>
+
+                            <!-- Filter by Date -->
+                            <div class="filter-select-wrap">
+                                <label for="filterFecha">Fecha:</label>
+                                <input type="date" id="filterFecha">
+                            </div>
+                        </div>
+
+                        <div class="filter-results-summary">
+                            <span id="filterCountText">Mostrando 0 de 0 registros</span>
+                            <div class="export-quick-btns">
+                                <button class="btn btn-outline btn-sm" id="btnExportFilteredCSV" title="Exportar vista actual a CSV">
+                                    <i class="fa-solid fa-file-csv"></i> Exportar Vista
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Fines History Table Card -->
+                    <div class="glass-card mt-5">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                <i class="fa-solid fa-rectangle-list text-primary"></i>
+                                <h3>Registro Histórico de Infracciones</h3>
+                            </div>
+                            <div class="table-actions">
+                                <span class="badge-total-records" id="badgeTotalTableCount">0 Multas</span>
+                            </div>
+                        </div>
+
+                        <div class="card-body table-responsive">
+                            <table class="data-table" id="tableHistorialFines">
+                                <thead>
+                                    <tr>
+                                        <th>ID Registro</th>
+                                        <th>Fecha & Hora</th>
+                                        <th>Conductor</th>
+                                        <th>Licencia</th>
+                                        <th>Placa</th>
+                                        <th>Infracción</th>
+                                        <th>Lugar</th>
+                                        <th>Monto Total</th>
+                                        <th>Estado</th>
+                                        <th class="text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyHistorialFines">
+                                    <!-- Dynamic Rows -->
+                                </tbody>
+                            </table>
+
+                            <div class="empty-state-table" id="emptyHistorialFines" style="display: none;">
+                                <i class="fa-solid fa-magnifying-glass-arrow-right"></i>
+                                <h4>No se encontraron multas con los filtros seleccionados</h4>
+                                <p>Intenta ajustar los criterios de búsqueda o registra una nueva infracción.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======================================================== -->
+                <!-- 4. ESTADÍSTICAS & GRÁFICOS SECTION -->
+                <!-- ======================================================== -->
+                <section class="app-section" id="section-estadisticas">
+                    
+                    <!-- Stats KPI Overview -->
+                    <div class="kpi-grid">
+                        <div class="kpi-card card-blue">
+                            <div class="kpi-icon-wrap"><i class="fa-solid fa-chart-column"></i></div>
+                            <div class="kpi-data">
+                                <span class="kpi-label">INFRACCIÓN MÁS FRECUENTE</span>
+                                <h3 class="kpi-value text-base" id="statMostFrequentName">-</h3>
+                                <span class="trend-badge" id="statMostFrequentCount">0 incidencias</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card card-purple">
+                            <div class="kpi-icon-wrap"><i class="fa-solid fa-money-bill-wave"></i></div>
+                            <div class="kpi-data">
+                                <span class="kpi-label">TOTAL MONETARIO REGISTRADO</span>
+                                <h3 class="kpi-value" id="statTotalMonetary">RD$ 0.00</h3>
+                                <span class="trend-badge" id="statAvgMonetary">Promedio por multa: RD$ 0.00</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card card-emerald">
+                            <div class="kpi-icon-wrap"><i class="fa-solid fa-percent"></i></div>
+                            <div class="kpi-data">
+                                <span class="kpi-label">TASA DE COBRO EFECTIVO</span>
+                                <h3 class="kpi-value" id="statPaymentRate">0%</h3>
+                                <span class="trend-badge" id="statPaymentCount">0 pagadas de 0 totales</span>
+                            </div>
+                        </div>
+
+                        <div class="kpi-card card-amber">
+                            <div class="kpi-icon-wrap"><i class="fa-solid fa-calendar-day"></i></div>
+                            <div class="kpi-data">
+                                <span class="kpi-label">DÍA CON MÁS INFRACCIONES</span>
+                                <h3 class="kpi-value text-base" id="statPeakDay">-</h3>
+                                <span class="trend-badge" id="statPeakDayCount">0 registros</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Charts Grid -->
+                    <div class="charts-2x2-grid mt-6">
+                        
+                        <!-- Chart 1: Multas por Tipo de Infracción -->
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <div class="card-title-group">
+                                    <i class="fa-solid fa-chart-pie text-primary"></i>
+                                    <h3>Multas por Tipo de Infracción</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container-md">
+                                    <canvas id="chartInfraccionesType"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chart 2: Multas por Estado -->
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <div class="card-title-group">
+                                    <i class="fa-solid fa-chart-donut text-primary"></i>
+                                    <h3>Distribución por Estado de Pago</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container-md">
+                                    <canvas id="chartEstados"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chart 3: Multas por Nivel de Gravedad -->
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <div class="card-title-group">
+                                    <i class="fa-solid fa-layer-group text-primary"></i>
+                                    <h3>Multas por Nivel de Gravedad</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container-md">
+                                    <canvas id="chartNiveles"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Chart 4: Recaudación vs Pendiente Mensual / Temporal -->
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <div class="card-title-group">
+                                    <i class="fa-solid fa-chart-line text-primary"></i>
+                                    <h3>Registro Temporal de Multas</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container-md">
+                                    <canvas id="chartTimeline"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+                <!-- ======================================================== -->
+                <!-- 5. CENTRO DE ANÁLISIS AI & PATRONES (INNOVADOR) -->
+                <!-- ======================================================== -->
+                <section class="app-section" id="section-analisis">
+                    <div class="analysis-hero-card glass-card">
+                        <div class="analysis-hero-content">
+                            <div class="analysis-ai-badge">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                <span>Motor de Análisis de Patrones de Tránsito</span>
+                            </div>
+                            <h2>Centro de Diagnóstico e Inteligencia de Datos</h2>
+                            <p>Algoritmos dinámicos que examinan automáticamente el comportamiento de las infracciones para identificar tendencias, puntos críticos y conductas de riesgo en tiempo real.</p>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Insights Grid -->
+                    <div class="insights-grid mt-6" id="insightsGridContainer">
+                        <!-- Auto-generated insight cards -->
+                    </div>
+
+                    <!-- Pattern Breakdown Visualizer -->
+                    <div class="glass-card mt-6">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                <i class="fa-solid fa-lightbulb text-primary"></i>
+                                <h3>Recomendaciones Estratégicas de Seguridad Vial</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="recommendations-list" id="recommendationsListContainer">
+                                <!-- Dynamically generated recommendations -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======================================================== -->
+                <!-- 6. TARIFAS & CONFIGURACIÓN DE INFRACCIONES -->
+                <!-- ======================================================== -->
+                <section class="app-section" id="section-tarifas">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                <i class="fa-solid fa-sliders text-primary"></i>
+                                <div>
+                                    <h3>Catálogo y Tarifas de Infracciones</h3>
+                                    <p class="card-subtitle">Administre los tipos de infracción, niveles de gravedad y montos base demostrativos.</p>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-sm" id="btnOpenAddCatalogModal">
+                                <i class="fa-solid fa-plus"></i>
+                                <span>Nueva Infracción</span>
+                            </button>
+                        </div>
+
+                        <!-- Catalog Notice & Last Update Date Editor -->
+                        <div class="catalog-meta-toolbar">
+                            <div class="meta-item-badge">
+                                <i class="fa-regular fa-calendar-check"></i>
+                                <span>Última Actualización de Tarifas: <strong id="catalogLastUpdateDisplay">28/09/2026</strong></span>
+                            </div>
+                            <div class="meta-actions">
+                                <button class="btn btn-outline btn-xs" id="btnUpdateCatalogDate">
+                                    <i class="fa-solid fa-calendar-day"></i> Actualizar Fecha a Hoy
+                                </button>
+                                <button class="btn btn-outline btn-xs" id="btnResetCatalogDefaults">
+                                    <i class="fa-solid fa-rotate-left"></i> Restaurar Tarifas Sugeridas
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="card-body table-responsive">
+                            <table class="data-table" id="tableCatalog">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Nombre de Infracción</th>
+                                        <th>Categoría</th>
+                                        <th>Nivel</th>
+                                        <th>Monto Base</th>
+                                        <th>Estado</th>
+                                        <th class="text-center">Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbodyCatalog">
+                                    <!-- Dynamic rows from script.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======================================================== -->
+                <!-- 7. COPIA DE SEGURIDAD (EXPORT / IMPORT / RESET) -->
+                <!-- ======================================================== -->
+                <section class="app-section" id="section-backup">
+                    <div class="backup-grid">
+                        
+                        <!-- Export Card -->
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <div class="card-title-group">
+                                    <i class="fa-solid fa-file-export text-primary"></i>
+                                    <h3>Exportar Registros</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="backup-desc">Descarga una copia completa de todas las multas y el catálogo de tarifas en tu equipo para conservarlas o analizarlas en Excel.</p>
+                                <div class="backup-btn-group">
+                                    <button class="btn btn-primary" id="btnExportJSON">
+                                        <i class="fa-solid fa-code"></i> Exportar a JSON (Copia Completa)
+                                    </button>
+                                    <button class="btn btn-outline" id="btnExportCSV">
+                                        <i class="fa-solid fa-file-csv"></i> Exportar a CSV (Excel)
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Import Card -->
+                        <div class="glass-card">
+                            <div class="card-header">
+                                <div class="card-title-group">
+                                    <i class="fa-solid fa-file-import text-primary"></i>
+                                    <h3>Importar Registros</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="backup-desc">Restaura una copia de seguridad en formato JSON generada previamente por esta aplicación.</p>
+                                <div class="import-dropzone" id="importDropzone">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <p>Arrastra tu archivo <strong>.JSON</strong> aquí o haz clic para seleccionar</p>
+                                    <input type="file" id="fileInputImport" accept=".json" style="display: none;">
+                                    <button class="btn btn-secondary btn-sm" id="btnTriggerFileInput">
+                                        Seleccionar Archivo JSON
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Reset & Privacy Controls -->
+                    <div class="glass-card mt-6">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                <i class="fa-solid fa-shield-halved text-warning"></i>
+                                <h3>Almacenamiento Local & Privacidad</h3>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="privacy-note-box">
+                                <i class="fa-solid fa-lock"></i>
+                                <div>
+                                    <h4>Aviso de Privacidad y Almacenamiento</h4>
+                                    <p>Esta versión educativa almacena todos los datos localmente en el <code>localStorage</code> de su navegador web. Ninguna información personal ni registro es enviado a servidores externos. No ingrese datos confidenciales reales sin implementar medidas de cifrado y autenticación de nivel de producción.</p>
+                                </div>
+                            </div>
+
+                            <div class="danger-zone-row mt-4">
+                                <div>
+                                    <strong>Restablecer Datos de Demostración:</strong>
+                                    <p>Borra los registros creados y recarga los ejemplos iniciales de prueba.</p>
+                                </div>
+                                <button class="btn btn-danger-outline btn-sm" id="btnResetAllDemoData">
+                                    <i class="fa-solid fa-trash-arrow-up"></i> Restablecer Demo Inicial
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ======================================================== -->
+                <!-- 8. MARCO LEGAL & NORMATIVA -->
+                <!-- ======================================================== -->
+                <section class="app-section" id="section-normativa">
+                    <div class="glass-card">
+                        <div class="card-header">
+                            <div class="card-title-group">
+                                <i class="fa-solid fa-scale-balanced text-primary"></i>
+                                <h3>Fuente de Normativa & Marco Demostrativo</h3>
+                            </div>
+                        </div>
+                        <div class="card-body legal-content">
+                            <div class="legal-badge-pill">Marco Legal de Referencia: Ley No. 63-17 de Movilidad, Transporte Terrestre, Tránsito y Seguridad Vial de la República Dominicana</div>
+                            
+                            <h4>1. Propósito Académico</h4>
+                            <p><strong>MultaRD Smart</strong> es un software simulador creado exclusivamente con propósitos didácticos y de demostración técnica en ingeniería de software. No constituye un portal de liquidación tributaria ni una plataforma gubernamental oficial.</p>
+
+                            <h4>2. Base de Cálculo</h4>
+                            <p>En la legislación dominicana (Ley 63-17), las sanciones económicas por infracciones de tránsito se establecen generalmente en función de múltiplos o fracciones del salario mínimo del sector público centralizado o montos específicos estipulados por el INTRANT y la DIGESETT. En esta aplicación, todos los montos son 100% configurables por el usuario administrador.</p>
+
+                            <h4>3. Clasificación de Infracciones</h4>
+                            <ul>
+                                <li><strong>Leves:</strong> Infracciones menores que no ponen en riesgo inminente la integridad física (ej. estacionamiento indebido).</li>
+                                <li><strong>Moderadas:</strong> Faltas de cumplimiento de requisitos operacionales (ej. no portar documentación o luces defectuosas).</li>
+                                <li><strong>Graves:</strong> Conductas de alto riesgo vial (ej. no usar cinturón, usar celular al volante, semáforo en rojo).</li>
+                                <li><strong>Muy Graves:</strong> Acciones de peligro extremo o desacato (ej. conducción temeraria, exceso de velocidad crítico).</li>
+                            </ul>
+
+                            <div class="official-links-box mt-4">
+                                <h4>Enlaces y Fuentes de Consulta Oficial (República Dominicana):</h4>
+                                <div class="links-tags">
+                                    <span class="ref-link-chip"><i class="fa-solid fa-building-columns"></i> DIGESETT (Dirección General de Seguridad de Tránsito y Transporte Terrestre)</span>
+                                    <span class="ref-link-chip"><i class="fa-solid fa-bus"></i> INTRANT (Instituto Nacional de Tránsito y Transporte Terrestre)</span>
+                                    <span class="ref-link-chip"><i class="fa-solid fa-gavel"></i> Ley 63-17 de Movilidad y Tránsito</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- MODALS & DIALOGS -->
+    <!-- ======================================================== -->
+
+    <!-- 1. COMPROBANTE / TICKET PRINT MODAL -->
+    <div class="modal-backdrop" id="modalComprobante">
+        <div class="modal-dialog modal-receipt-dialog">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <i class="fa-solid fa-receipt text-primary"></i>
+                    <h3>Comprobante de Registro de Infracción</h3>
+                </div>
+                <button class="btn-icon" id="btnCloseReceiptModal" aria-label="Cerrar Comprobante">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Printable Voucher Section -->
+                <div class="printable-voucher" id="printableVoucherContent">
+                    <div class="voucher-watermark">DEMOSTRATIVO</div>
+                    
+                    <div class="voucher-header">
+                        <div class="voucher-logo">
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <div>
+                                <h2>MultaRD Smart</h2>
+                                <p>SISTEMA DEMOSTRATIVO DE GESTIÓN VIAL</p>
+                            </div>
+                        </div>
+                        <div class="voucher-meta">
+                            <span class="voucher-reg-label">ACTA DE REGISTRO No.</span>
+                            <strong class="voucher-reg-num" id="voucherId">MRD-2026-0001</strong>
+                            <span class="voucher-date" id="voucherDateTime">28/09/2026 10:30 AM</span>
+                        </div>
+                    </div>
+
+                    <div class="voucher-divider"></div>
+
+                    <div class="voucher-grid-info">
+                        <div class="voucher-box">
+                            <span class="vbox-title">DATOS DEL CONDUCTOR</span>
+                            <div class="vbox-row"><span>Nombre:</span> <strong id="voucherConductor">Juan Pérez</strong></div>
+                            <div class="vbox-row"><span>Cédula / Licencia:</span> <strong id="voucherLicencia">001-1234567-8</strong></div>
+                        </div>
+
+                        <div class="voucher-box">
+                            <span class="vbox-title">DATOS DEL VEHÍCULO</span>
+                            <div class="vbox-row"><span>Placa:</span> <strong id="voucherPlaca">A123456</strong></div>
+                            <div class="vbox-row"><span>Tipo:</span> <strong id="voucherVehiculo">Automóvil Privado</strong></div>
+                        </div>
+                    </div>
+
+                    <div class="voucher-box mt-3">
+                        <span class="vbox-title">DETALLES DE LA INFRACCIÓN</span>
+                        <div class="vbox-row"><span>Tipificación:</span> <strong id="voucherInfraccion">Exceso de velocidad</strong></div>
+                        <div class="vbox-row"><span>Lugar del Hecho:</span> <strong id="voucherLugar">Av. 27 de Febrero</strong></div>
+                        <div class="vbox-row"><span>Nivel de Gravedad:</span> <span class="badge-level" id="voucherNivel">Grave</span></div>
+                        <div class="vbox-row"><span>Fiscalizador:</span> <span id="voucherAgente">Oficial R. Méndez</span></div>
+                        <div class="vbox-row" id="voucherObsWrap"><span>Observaciones:</span> <em id="voucherObservaciones">Ninguna</em></div>
+                    </div>
+
+                    <div class="voucher-financials mt-3">
+                        <div class="vfin-row"><span>Monto Base:</span> <span id="voucherMontoBase">RD$ 1,667.00</span></div>
+                        <div class="vfin-row" id="voucherRecargoRow"><span>Recargo Aplicado:</span> <span id="voucherRecargo">RD$ 0.00</span></div>
+                        <div class="vfin-row" id="voucherDescuentoRow"><span>Descuento Aplicado:</span> <span id="voucherDescuento">- RD$ 0.00</span></div>
+                        <div class="vfin-row-total">
+                            <span>TOTAL LIQUIDADO:</span>
+                            <strong id="voucherTotal">RD$ 1,667.00</strong>
+                        </div>
+                        <div class="vfin-status">
+                            <span>ESTADO DEL REGISTRO:</span>
+                            <strong class="status-badge" id="voucherEstado">Pendiente</strong>
+                        </div>
+                    </div>
+
+                    <div class="voucher-footer">
+                        <div class="voucher-barcode-area">
+                            <div class="barcode-visual" id="voucherBarcode">||||| | |||| ||| |||||| |||| | |||||</div>
+                            <span class="barcode-subtext">DOCUMENTO DEMOSTRATIVO EDUCATIVO</span>
+                        </div>
+                        <div class="voucher-disclaimer">
+                            <p><strong>AVISO IMPORTANTE:</strong> Este comprobante es generado por una aplicación con fines exclusivamente académicos y no posee validez legal ni fiscal ante la DIGESETT, INTRANT ni el Poder Judicial.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-outline" id="btnCloseReceiptBtnBottom">Cerrar</button>
+                <button class="btn btn-primary" id="btnPrintReceiptBtn">
+                    <i class="fa-solid fa-print"></i>
+                    <span>Imprimir / Guardar en PDF</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. EDIT FINE MODAL -->
+    <div class="modal-backdrop" id="modalEditFine">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <i class="fa-solid fa-pen-to-square text-primary"></i>
+                    <h3>Editar Multa <span id="editModalFineIdTitle"></span></h3>
+                </div>
+                <button class="btn-icon" id="btnCloseEditModal" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="formEditFine">
+                    <input type="hidden" id="editFineId">
+                    <div class="grid-2">
+                        <div class="input-field">
+                            <label for="editConductor">Conductor</label>
+                            <input type="text" id="editConductor" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="editLicencia">Licencia</label>
+                            <input type="text" id="editLicencia" required>
+                        </div>
+                    </div>
+                    <div class="grid-2 mt-2">
+                        <div class="input-field">
+                            <label for="editPlaca">Placa</label>
+                            <input type="text" id="editPlaca" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="editLugar">Lugar</label>
+                            <input type="text" id="editLugar" required>
+                        </div>
+                    </div>
+                    <div class="grid-2 mt-2">
+                        <div class="input-field">
+                            <label for="editEstado">Estado de Multa</label>
+                            <select id="editEstado" required>
+                                <option value="Pendiente">Pendiente</option>
+                                <option value="Pagada">Pagada</option>
+                                <option value="En revisión">En revisión</option>
+                                <option value="Anulada">Anulada</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label for="editTotal">Monto Total (RD$)</label>
+                            <input type="number" id="editTotal" step="0.01" min="0" required>
+                        </div>
+                    </div>
+                    <div class="input-field mt-2">
+                        <label for="editObservaciones">Observaciones</label>
+                        <textarea id="editObservaciones" rows="2"></textarea>
+                    </div>
+                    <div class="form-action-row mt-4">
+                        <button type="button" class="btn btn-outline" id="btnCancelEditModal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. ADD / EDIT CATALOG INFRACTION MODAL -->
+    <div class="modal-backdrop" id="modalCatalogItem">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <div class="modal-title-group">
+                    <i class="fa-solid fa-tags text-primary"></i>
+                    <h3 id="catalogModalTitle">Agregar Nueva Infracción</h3>
+                </div>
+                <button class="btn-icon" id="btnCloseCatalogModal" aria-label="Cerrar"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <form id="formCatalogItem">
+                    <input type="hidden" id="catalogItemCode">
+                    <div class="input-field">
+                        <label for="catalogItemNombre">Nombre de la Infracción <span class="required">*</span></label>
+                        <input type="text" id="catalogItemNombre" placeholder="Ej. Estacionamiento en acera o rampa" required>
+                    </div>
+                    <div class="grid-2 mt-2">
+                        <div class="input-field">
+                            <label for="catalogItemCategoria">Categoría</label>
+                            <input type="text" id="catalogItemCategoria" placeholder="Ej. Estacionamiento y Vía" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="catalogItemNivel">Nivel de Gravedad</label>
+                            <select id="catalogItemNivel" required>
+                                <option value="Leve">Leve</option>
+                                <option value="Moderada">Moderada</option>
+                                <option value="Grave">Grave</option>
+                                <option value="Muy Grave">Muy Grave</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid-2 mt-2">
+                        <div class="input-field">
+                            <label for="catalogItemMonto">Monto Base (RD$) <span class="required">*</span></label>
+                            <input type="number" id="catalogItemMonto" min="100" step="50" placeholder="1000.00" required>
+                        </div>
+                        <div class="input-field">
+                            <label for="catalogItemActivo">Estado en Catálogo</label>
+                            <select id="catalogItemActivo">
+                                <option value="true">Activa (Disponible)</option>
+                                <option value="false">Inactiva (Deshabilitada)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-field mt-2">
+                        <label for="catalogItemDescripcion">Descripción Técnica / Legal</label>
+                        <textarea id="catalogItemDescripcion" rows="2" placeholder="Detalle la conducta sancionada según la normativa"></textarea>
+                    </div>
+                    <div class="form-action-row mt-4">
+                        <button type="button" class="btn btn-outline" id="btnCancelCatalogModal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="btnSaveCatalogItem">Guardar Infracción</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. CONFIRM DELETE MODAL -->
+    <div class="modal-backdrop" id="modalConfirmDelete">
+        <div class="modal-dialog modal-confirm-dialog">
+            <div class="modal-body text-center">
+                <div class="confirm-icon-wrap">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <h3>¿Confirmar Eliminación?</h3>
+                <p id="confirmDeleteMessage">¿Está seguro de que desea eliminar este registro? Esta acción no se puede deshacer.</p>
+                <div class="confirm-actions-row">
+                    <button class="btn btn-outline" id="btnCancelDelete">Cancelar</button>
+                    <button class="btn btn-danger" id="btnConfirmDeleteAction">Sí, Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- App JavaScript Logic -->
+    <script src="script.js"></script>
+</body>
+</html>

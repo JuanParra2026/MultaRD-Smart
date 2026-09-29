@@ -1,0 +1,11 @@
+id_multa,fecha,dia_semana,hora,conductor,cedula,placa,tipo_vehiculo,lugar,categoria_infraccion,infraccion,gravedad,monto_base,recargo_porc,descuento_porc,total_rd,estado,reincidente
+MRD-2026-0001,2026-09-15,Martes,08:30,Carlos Eduardo Mendoza,001-1827364-9,A-849201,Automóvil Sedán,Av. 27 de Febrero,Señalización,Luz Roja Semáforo,Muy Grave,3000,10,0,3300,Pendiente,No
+MRD-2026-0002,2026-09-18,Viernes,14:15,María Altagracia Rosario,031-0948271-2,G-518290,SUV / Jeepeta,Autopista Duarte,Velocidad,Exceso de Velocidad,Grave,2500,0,20,2000,Pagada,No
+MRD-2026-0003,2026-09-20,Domingo,22:40,José Ramón De la Cruz,402-2384910-5,N-102938,Motocicleta,Av. John F. Kennedy,Seguridad Pasiva,Sin Casco / Cinturón,Moderada,1500,0,0,1500,Pendiente,Si
+MRD-2026-0004,2026-09-22,Martes,19:10,Ana Patricia Tavárez,002-3920194-1,L-938201,Comercial Ligero,Av. Abraham Lincoln,Distracción,Uso de Celular,Grave,2000,0,10,1800,En revisión,No
+MRD-2026-0005,2026-09-25,Viernes,01:25,Félix Manuel Ventura,047-1928374-8,A-726194,Automóvil Sedán,Av. George Washington,Seguridad Crítica,Conducción con Alcohol,Muy Grave,10000,25,0,12500,Pendiente,Si
+MRD-2026-0006,2026-09-26,Sábado,11:05,Roberto Antonio Paulino,001-0817263-4,A-110293,Automóvil Sedán,Av. Winston Churchill,Estacionamiento,Estacionamiento Prohibido,Leve,1800,0,0,1800,Pagada,No
+MRD-2026-0007,2026-09-27,Domingo,17:50,Lucía Mercedes Peña,054-9182736-2,G-339102,SUV / Jeepeta,Av. Núñez de Cáceres,Maniobras,Giro Prohibido,Muy Grave,4000,0,0,4000,Pendiente,No
+MRD-2026-0008,2026-09-28,Lunes,07:45,Héctor Julio Santana,001-5519283-0,N-992817,Motocicleta,Puente Juan Bosch,Seguridad Pasiva,Sin Casco / Cinturón,Moderada,1500,10,0,1650,Pendiente,Si
+MRD-2026-0009,2026-09-28,Lunes,16:30,Gabriela Esther Medina,037-4491827-1,A-559102,Automóvil Sedán,Av. Luperón,Distracción,Uso de Celular,Grave,2000,0,0,2000,Pagada,No
+MRD-2026-0010,2026-09-29,Martes,12:10,Danilo Emilio Castillo,001-3382910-6,L-449182,Camión / Pesado,Av. República de Colombia,Documentación,Falta de Seguro / Marbete,Grave,3500,15,0,4025,Pendiente,No

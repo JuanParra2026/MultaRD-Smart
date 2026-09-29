@@ -1,0 +1,74 @@
+[
+  {
+    "id": "INF-001",
+    "nombre": "Exceso de Velocidad (>20 km/h sobre el límite)",
+    "categoria": "Velocidad y Tránsito",
+    "montoBase": 2500,
+    "gravedad": "Grave",
+    "puntosLicencia": 4,
+    "descripcion": "Conducir superando el límite de velocidad señalizado en vías urbanas o autopistas."
+  },
+  {
+    "id": "INF-002",
+    "nombre": "Luz Roja de Semáforo / Desacato de Señal de Pare",
+    "categoria": "Señalización",
+    "montoBase": 3000,
+    "gravedad": "Muy Grave",
+    "puntosLicencia": 6,
+    "descripcion": "Cruzar intersección con semáforo en rojo o ignorar señal reglamentaria de detención."
+  },
+  {
+    "id": "INF-003",
+    "nombre": "Uso de Dispositivo Móvil / Celular al Conducir",
+    "categoria": "Distracción al Volante",
+    "montoBase": 2000,
+    "gravedad": "Grave",
+    "puntosLicencia": 4,
+    "descripcion": "Manipular celulares o dispositivos electrónicos mientras el vehículo está en marcha."
+  },
+  {
+    "id": "INF-004",
+    "nombre": "No Uso del Cinturón de Seguridad / Casco Protector",
+    "categoria": "Seguridad Pasiva",
+    "montoBase": 1500,
+    "gravedad": "Moderada",
+    "puntosLicencia": 2,
+    "descripcion": "Conductor o acompañantes sin cinturón, o motociclistas sin casco homologado."
+  },
+  {
+    "id": "INF-005",
+    "nombre": "Conducción bajo los Efectos del Alcohol (>0.5 g/l)",
+    "categoria": "Seguridad Vial Crítica",
+    "montoBase": 10000,
+    "gravedad": "Muy Grave",
+    "puntosLicencia": 10,
+    "descripcion": "Operar vehículo de motor en estado de embriaguez o bajo sustancias prohibidas."
+  },
+  {
+    "id": "INF-006",
+    "nombre": "Estacionamiento en Zona Prohibida / Bloqueo de Rampa",
+    "categoria": "Estacionamiento y Obstrucción",
+    "montoBase": 1800,
+    "gravedad": "Leve",
+    "puntosLicencia": 1,
+    "descripcion": "Aparcar en aceras, paradas de autobús, hidrantes o rampas de personas con discapacidad."
+  },
+  {
+    "id": "INF-007",
+    "nombre": "Falta de Seguro Obligatorio / Marbete de Circulación",
+    "categoria": "Documentación y Legalidad",
+    "montoBase": 3500,
+    "gravedad": "Grave",
+    "puntosLicencia": 3,
+    "descripcion": "Circular sin póliza de seguro vigente o con marbete fiscal vencido."
+  },
+  {
+    "id": "INF-008",
+    "nombre": "Giro Prohibido / Conducción en Vía Contraria",
+    "categoria": "Maniobras Peligrosas",
+    "montoBase": 4000,
+    "gravedad": "Muy Grave",
+    "puntosLicencia": 6,
+    "descripcion": "Ingresar en sentido contrario a la vía o realizar giros en U no permitidos."
+  }
+]

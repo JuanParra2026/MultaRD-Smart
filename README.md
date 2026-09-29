@@ -1,7 +1,17 @@
 # 🚗 MultaRD Smart | Sistema de Gestión y Cálculo de Multas de Tránsito
 
+![Banner MultaRD Smart](docs/images/banner_multard.png)
+
 > **Proyecto Educativo, Demostrativo y de Análisis de Datos**  
 > Desarrollado con arquitectura moderna: **Python (Flask)**, **Pandas**, **Jupyter Notebook**, **HTML5 Semántico**, **CSS3 Custom Properties (Modo Claro/Oscuro)** y **JavaScript ES6+**.
+
+---
+
+## 📸 Vistas de la Plataforma
+
+| Dashboard de Métricas y KPIs | Calculadora y Boleta Digital |
+| :---: | :---: |
+| ![Dashboard MultaRD Smart](docs/images/dashboard_preview.png) | ![Calculadora de Multas](docs/images/calculadora_multas.png) |
 
 ---
 

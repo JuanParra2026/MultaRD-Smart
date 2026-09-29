@@ -1,5 +1,7 @@
 # 📖 Tutorial y Guía de Uso del Sistema | MultaRD Smart
 
+![Banner MultaRD Smart](images/banner_multard.png)
+
 Bienvenido a **MultaRD Smart**. Este tutorial le guiará a través de todas las funcionalidades del sistema.
 
 ---
@@ -22,16 +24,18 @@ Bienvenido a **MultaRD Smart**. Este tutorial le guiará a través de todas las 
 ## 2. Navegación por Módulos
 
 ### 📊 1. Dashboard Principal
+![Dashboard MultaRD Smart](images/dashboard_preview.png)
 - Consulte el resumen de multas registradas, montos totales, recaudación efectiva y monto pendiente.
 - Analice los gráficos de barras y donas con la distribución de infracciones.
 
 ### 🧮 2. Calculadora y Registro de Infracción
+![Calculadora MultaRD Smart](images/calculadora_multas.png)
 1. Diríjase a la pestaña **Calculadora / Nueva Multa**.
 2. Ingrese los datos del infractor (Nombre, Cédula con guiones, Placa, Tipo de vehículo y Ubicación).
 3. Seleccione la infracción del catálogo desplegable.
 4. Ajuste los porcentajes de **Recargo** (por mora o reincidencia) o **Descuento** (por pronto pago).
 5. Observe el cálculo en tiempo real en la tarjeta lateral.
-6. Haga clic en **Registrar Infracción** para guardarla.
+6. Haga clic en **Registrar Infracción** para guardarla e imprimir el comprobante oficial.
 
 ### 📋 3. Historial y Búsqueda Inteligente
 - Escriba en la barra de búsqueda para filtrar instantáneamente por nombre, cédula o placa.

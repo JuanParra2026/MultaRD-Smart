@@ -5,6 +5,7 @@
 [![GitHub Repo](https://img.shields.io/badge/GitHub-JuanParra2026%2FMultaRD--Smart-blue?logo=github)](https://github.com/JuanParra2026/MultaRD-Smart)
 [![Python Version](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Framework](https://img.shields.io/badge/Framework-Flask_3.1-black?logo=flask)](https://flask.palletsprojects.com/)
+[![Jupyter Notebook](https://img.shields.io/badge/Jupyter-Analisis_Multas-F37626?logo=jupyter&logoColor=white)](https://github.com/JuanParra2026/MultaRD-Smart/blob/main/Analisis_Multas_Transito.ipynb)
 [![Render Deploy](https://img.shields.io/badge/Deploy-Render-46E3B7?logo=render&logoColor=white)](https://dashboard.render.com)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
@@ -17,6 +18,9 @@
 
 - 🐙 **Repositorio Oficial en GitHub:**  
   👉 [https://github.com/JuanParra2026/MultaRD-Smart](https://github.com/JuanParra2026/MultaRD-Smart)
+
+- 📓 **Cuaderno de Python (Jupyter Notebook Interactivo en GitHub):**  
+  👉 [https://github.com/JuanParra2026/MultaRD-Smart/blob/main/Analisis_Multas_Transito.ipynb](https://github.com/JuanParra2026/MultaRD-Smart/blob/main/Analisis_Multas_Transito.ipynb)
 
 - 🚀 **Panel de Despliegue en Render (Juan Parra):**  
   👉 [https://dashboard.render.com](https://dashboard.render.com)

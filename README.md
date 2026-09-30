@@ -7,6 +7,15 @@
 
 ---
 
+## 🔗 Enlaces Principales del Proyecto
+
+- 🐙 **Repositorio en GitHub:** [https://github.com/JuanParra2026/MultaRD-Smart](https://github.com/JuanParra2026/MultaRD-Smart)
+- 🚀 **Panel de Control Render:** [https://dashboard.render.com](https://dashboard.render.com)
+- 🌐 **Acceso Web en Vivo (Render):** [https://multard-smart.onrender.com](https://multard-smart.onrender.com) *(o la URL asignada en tu servicio Render)*
+- 💻 **Servidor Local Flask:** [http://127.0.0.1:5000](http://127.0.0.1:5000)
+
+---
+
 ## 📸 Vistas de la Plataforma
 
 | Dashboard de Métricas y KPIs | Calculadora y Boleta Digital |
@@ -22,14 +31,14 @@
 El proyecto cuenta con una arquitectura híbrida que permite:
 1. **Ejecución como Servidor Web Flask (Backend + REST API + MVC)** con endpoints de datos y servicios de exportación.
 2. **Ejecución Directa en Navegador (Frontend SPA)** con almacenamiento reactivo en `LocalStorage`.
-3. **Módulo de Análisis de Datos** mediante Jupyter Notebook (`Analisis_Multas_Transito.ipynb`) para estudio estadístico y cuantitativo.
+3. **Módulo de Análisis de Datos** mediante Jupyter Notebook ([`Analisis_Multas_Transito.ipynb`](Analisis_Multas_Transito.ipynb)) para estudio estadístico y cuantitativo.
 
 > ⚠️ **Aviso de Responsabilidad Legal:**  
 > Esta aplicación ha sido desarrollada exclusivamente con **fines pedagógicos, de análisis y demostrativos**. Los montos, infracciones y registros son datos configurables o simulados y no representan un sistema oficial de la **Policía Nacional**, **DIGESETT**, **INTRANT** ni de ninguna institución gubernamental de la República Dominicana.
 
 ---
 
-## 📁 Estructura del Proyecto
+## 📁 Estructura del Proyecto y Enlaces a la Documentación
 
 ```text
 APP PARRA/
@@ -66,7 +75,10 @@ APP PARRA/
 │   │   ├── guia_calculo_y_tarifas_viales.md      # Metodología de cálculo, tarifas y fiscalización vial
 │   │   └── diccionario_datos.md                  # Especificación y esquema de entidades
 │   ├── images/
-│   │   └── arquitectura.png                      # Diagrama visual de la arquitectura del software
+│   │   ├── arquitectura.png                      # Diagrama visual de la arquitectura del software
+│   │   ├── banner_multard.png                    # Banner tecnológico oficial
+│   │   ├── dashboard_preview.png                 # Captura de pantalla del dashboard
+│   │   └── calculadora_multas.png                # Captura de pantalla de la calculadora
 │   ├── arquitectura.md                           # Explicación técnica de la estructura del sistema y flujo
 │   ├── evidencia_antigravity.md                  # Registro de desarrollo asistido por IA (Antigravity)
 │   ├── presentacion_sustentacion.md              # Guion estructurado para sustentación del proyecto
@@ -79,10 +91,24 @@ APP PARRA/
 ├── Procfile                                      # Configuración para despliegue en la nube (Heroku / Render)
 ├── README.md                                     # Portada principal e instrucciones del proyecto
 ├── requirements.txt                              # Dependencias y librerías de Python requeridas
+├── runtime.txt                                   # Especificación de versión Python para Render
 ├── run.py                                        # Script principal de encendido del servidor Flask
 ├── script.js                                     # Script JavaScript raíz
 └── style.css                                     # Hoja de estilos CSS raíz
 ```
+
+---
+
+## 📚 Documentación Técnica Detallada
+
+- 🚗 **[Guía de Cálculo y Tarifas Viales](docs/documentacion/guia_calculo_y_tarifas_viales.md):** Fórmulas matemáticas, desglose de recargos y catálogo de severidad.
+- 📘 **[Manual de Usuario](docs/documentacion/manual_usuario.md):** Manual paso a paso para emisión de multas, búsquedas y comprobantes.
+- 🛠️ **[Manual del Administrador](docs/documentacion/manual_administrador.md):** Configuración de servidor, despliegue y copias de seguridad.
+- 📖 **[Diccionario de Datos](docs/documentacion/diccionario_datos.md):** Esquemas y campos de las entidades de multas e infracciones.
+- 🏛️ **[Arquitectura del Software](docs/arquitectura.md):** Diagrama y flujo de capas MVC y API REST.
+- 🎓 **[Presentación del Proyecto](docs/presentacion_sustentacion.md):** Guion de 15 minutos para exposición del sistema.
+- 📖 **[Tutorial de Uso](docs/tutorial.md):** Guía rápida para nuevos usuarios.
+- 🤖 **[Evidencia de Desarrollo con IA](docs/evidencia_antigravity.md):** Registro de desarrollo asistido en Google Antigravity.
 
 ---
 
@@ -106,7 +132,7 @@ APP PARRA/
 
 ### Opción 2: Modo Directo Frontend (Live Server o Doble Clic)
 
-1. **Doble Clic:** Abra directamente el archivo `index.html` en Google Chrome, Edge o Firefox.
+1. **Doble Clic:** Abra directamente el archivo [`index.html`](index.html) en Google Chrome, Edge o Firefox.
 2. **Live Server (VS Code):** Haga clic derecho sobre `index.html` -> *Open with Live Server*.
 
 ---
@@ -117,21 +143,21 @@ APP PARRA/
    ```powershell
    jupyter notebook
    ```
-2. Abra el archivo `Analisis_Multas_Transito.ipynb`.
+2. Abra el archivo [`Analisis_Multas_Transito.ipynb`](Analisis_Multas_Transito.ipynb).
 3. Ejecute las celdas para realizar el análisis estadístico descriptivo, tablas cruzadas y gráficos de distribución sobre el dataset vial.
 
 ---
 
 ## 🏛️ Endpoints de la API REST (Flask)
 
-| Método | Endpoint | Descripción |
-| :--- | :--- | :--- |
-| `GET` | `/` | Renderiza la interfaz gráfica interactiva |
-| `GET` | `/api/health` | Estado de salud y versión de la API |
-| `GET` | `/api/info` | Metadatos y stack tecnológico de la plataforma |
-| `GET` | `/api/tarifas` | Catálogo de tarifas base de infracción |
-| `GET` | `/api/multas` | Listado de todas las multas registradas |
-| `POST`| `/api/multas` | Registro y cálculo de una nueva infracción |
-| `GET` | `/api/estadisticas` | KPIs y métricas agregadas (totales, recaudo, distribución) |
-| `GET` | `/api/exportar/csv` | Descarga directa del dataset de multas en CSV |
-| `GET` | `/api/exportar/json`| Descarga directa del dataset de multas en JSON |
+| Método | Endpoint | Descripción | Enlace Directo (Servidor Local) |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/` | Renderiza la interfaz gráfica interactiva | [http://127.0.0.1:5000/](http://127.0.0.1:5000/) |
+| `GET` | `/api/health` | Estado de salud y versión de la API | [http://127.0.0.1:5000/api/health](http://127.0.0.1:5000/api/health) |
+| `GET` | `/api/info` | Metadatos y stack tecnológico de la plataforma | [http://127.0.0.1:5000/api/info](http://127.0.0.1:5000/api/info) |
+| `GET` | `/api/tarifas` | Catálogo de tarifas base de infracción | [http://127.0.0.1:5000/api/tarifas](http://127.0.0.1:5000/api/tarifas) |
+| `GET` | `/api/multas` | Listado de todas las multas registradas | [http://127.0.0.1:5000/api/multas](http://127.0.0.1:5000/api/multas) |
+| `POST`| `/api/multas` | Registro y cálculo de una nueva infracción | `Endpoint POST` |
+| `GET` | `/api/estadisticas` | KPIs y métricas agregadas | [http://127.0.0.1:5000/api/estadisticas](http://127.0.0.1:5000/api/estadisticas) |
+| `GET` | `/api/exportar/csv` | Descarga directa del dataset de multas en CSV | [http://127.0.0.1:5000/api/exportar/csv](http://127.0.0.1:5000/api/exportar/csv) |
+| `GET` | `/api/exportar/json`| Descarga directa del dataset de multas en JSON | [http://127.0.0.1:5000/api/exportar/json](http://127.0.0.1:5000/api/exportar/json) |

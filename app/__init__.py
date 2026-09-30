@@ -27,3 +27,6 @@ def create_app(test_config=None):
     app.register_blueprint(routes.bp)
 
     return app
+
+# Instancia WSGI expuesta para servidores de despliegue como Gunicorn (web: gunicorn app:app)
+app = create_app()

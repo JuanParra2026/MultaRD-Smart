@@ -2,6 +2,12 @@
 
 ![Banner MultaRD Smart](docs/images/banner_multard.png)
 
+[![GitHub Repo](https://img.shields.io/badge/GitHub-JuanParra2026%2FMultaRD--Smart-blue?logo=github)](https://github.com/JuanParra2026/MultaRD-Smart)
+[![Python Version](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Framework](https://img.shields.io/badge/Framework-Flask_3.1-black?logo=flask)](https://flask.palletsprojects.com/)
+[![Render Deploy](https://img.shields.io/badge/Deploy-Render-46E3B7?logo=render&logoColor=white)](https://dashboard.render.com)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
 > **Proyecto Educativo, Demostrativo y de Análisis de Datos**  
 > Desarrollado con arquitectura moderna: **Python (Flask)**, **Pandas**, **Jupyter Notebook**, **HTML5 Semántico**, **CSS3 Custom Properties (Modo Claro/Oscuro)** y **JavaScript ES6+**.
 
@@ -9,10 +15,17 @@
 
 ## 🔗 Enlaces Principales del Proyecto
 
-- 🐙 **Repositorio en GitHub:** [https://github.com/JuanParra2026/MultaRD-Smart](https://github.com/JuanParra2026/MultaRD-Smart)
-- 🚀 **Panel de Control Render:** [https://dashboard.render.com](https://dashboard.render.com)
-- 🌐 **Acceso Web en Vivo (Render):** [https://multard-smart.onrender.com](https://multard-smart.onrender.com) *(o la URL asignada en tu servicio Render)*
-- 💻 **Servidor Local Flask:** [http://127.0.0.1:5000](http://127.0.0.1:5000)
+- 🐙 **Repositorio Oficial en GitHub:**  
+  👉 [https://github.com/JuanParra2026/MultaRD-Smart](https://github.com/JuanParra2026/MultaRD-Smart)
+
+- 🚀 **Panel de Despliegue en Render (Juan Parra):**  
+  👉 [https://dashboard.render.com](https://dashboard.render.com)
+
+- 🌐 **Acceso Web en Producción (Render):**  
+  👉 [https://multard-smart.onrender.com](https://multard-smart.onrender.com) *(o la URL asignada al crear tu Web Service)*
+
+- 💻 **Servidor Local de Desarrollo (Flask):**  
+  👉 [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ---
 
@@ -88,7 +101,7 @@ APP PARRA/
 ├── .mcp.json                                     # Configuración de protocolo MCP
 ├── Analisis_Multas_Transito.ipynb                # Notebook interactivo de Jupyter con análisis de datos viales
 ├── index.html                                    # Interfaz web directa / punto de entrada estático
-├── Procfile                                      # Configuración para despliegue en la nube (Heroku / Render)
+├── Procfile                                      # Configuración para despliegue en la nube (Render / Heroku)
 ├── README.md                                     # Portada principal e instrucciones del proyecto
 ├── requirements.txt                              # Dependencias y librerías de Python requeridas
 ├── runtime.txt                                   # Especificación de versión Python para Render
@@ -99,15 +112,15 @@ APP PARRA/
 
 ---
 
-## 📚 Documentación Técnica Detallada
+## 📚 Enlaces Directos a la Documentación Técnica
 
-- 🚗 **[Guía de Cálculo y Tarifas Viales](docs/documentacion/guia_calculo_y_tarifas_viales.md):** Fórmulas matemáticas, desglose de recargos y catálogo de severidad.
+- 🚗 **[Guía de Cálculo, Tarifas y Fiscalización Vial](docs/documentacion/guia_calculo_y_tarifas_viales.md):** Fórmulas matemáticas, desglose de recargos y catálogo de severidad.
 - 📘 **[Manual de Usuario](docs/documentacion/manual_usuario.md):** Manual paso a paso para emisión de multas, búsquedas y comprobantes.
 - 🛠️ **[Manual del Administrador](docs/documentacion/manual_administrador.md):** Configuración de servidor, despliegue y copias de seguridad.
-- 📖 **[Diccionario de Datos](docs/documentacion/diccionario_datos.md):** Esquemas y campos de las entidades de multas e infracciones.
+- 📖 **[Diccionario de Datos y Esquemas](docs/documentacion/diccionario_datos.md):** Esquemas y campos de las entidades de multas e infracciones.
 - 🏛️ **[Arquitectura del Software](docs/arquitectura.md):** Diagrama y flujo de capas MVC y API REST.
 - 🎓 **[Presentación del Proyecto](docs/presentacion_sustentacion.md):** Guion de 15 minutos para exposición del sistema.
-- 📖 **[Tutorial de Uso](docs/tutorial.md):** Guía rápida para nuevos usuarios.
+- 📖 **[Tutorial de Uso del Sistema](docs/tutorial.md):** Guía rápida para nuevos usuarios.
 - 🤖 **[Evidencia de Desarrollo con IA](docs/evidencia_antigravity.md):** Registro de desarrollo asistido en Google Antigravity.
 
 ---
@@ -121,11 +134,15 @@ APP PARRA/
      ```powershell
      .\.venv\Scripts\Activate.ps1
      ```
-2. **Encender el servidor**:
+2. **Instalar dependencias (si no están instaladas)**:
+   ```powershell
+   pip install -r requirements.txt
+   ```
+3. **Encender el servidor**:
    ```powershell
    python run.py
    ```
-3. **Acceder en el navegador**:  
+4. **Acceder en el navegador**:  
    Abra [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 ---
